@@ -7,6 +7,7 @@ import { config } from "@/lib/config";
 import { logger } from "@/lib/logger";
 import { AppError, ErrorCodes } from "@/lib/errors";
 import { OCRProvider, OCRResult, OCRProgressCallback, validateImageMime, maxImageBytes } from "./ocr";
+import { apiUrl } from "@/lib/network/api-url";
 
 export class ClientTesseractOCRProvider implements OCRProvider {
   async extractText(
@@ -97,7 +98,7 @@ export async function scanLabelClient(
     const formData = new FormData();
     formData.append("image", image);
     
-    const response = await fetch("/api/scan/label", {
+    const response = await fetch(apiUrl("/api/scan/label"), {
       method: "POST",
       body: formData,
     });

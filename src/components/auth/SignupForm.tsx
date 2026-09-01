@@ -13,6 +13,7 @@ import { PasswordStrengthIndicator } from "@/components/auth/PasswordStrength";
 import { AuthDivider } from "@/components/auth/AuthDivider";
 import { SocialLoginButton } from "@/components/auth/SocialLoginButton";
 import { GoogleIcon } from "@/components/auth/GoogleIcon";
+import { apiUrl } from "@/lib/network/api-url";
 
 type SignupFormProps = {
   labels: AuthLabels["signup"];
@@ -114,7 +115,7 @@ export function SignupForm({
           router.push("/onboarding");
           return;
         }
-        const response = await fetch("/api/auth/signup", {
+        const response = await fetch(apiUrl("/api/auth/signup"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

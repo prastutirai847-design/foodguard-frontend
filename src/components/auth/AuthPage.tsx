@@ -11,6 +11,7 @@ import { LoginForm } from "@/components/auth/LoginForm";
 import { SignupForm } from "@/components/auth/SignupForm";
 import { AuthDivider } from "@/components/auth/AuthDivider";
 import { useAuth } from "@/components/AuthProvider";
+import { apiUrl } from "@/lib/network/api-url";
 
 const LANGUAGE_STORAGE_KEY = "app-preferred-language";
 
@@ -41,7 +42,7 @@ export function AuthPage() {
         router.push("/");
         return;
       }
-      const response = await fetch("/api/auth/guest", { method: "POST" });
+      const response = await fetch(apiUrl("/api/auth/guest"), { method: "POST" });
       const json = (await response.json()) as {
         success: boolean;
         data?: { token: string };

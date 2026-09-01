@@ -26,6 +26,7 @@ import type { ProductCacheRecord } from "@/lib/cache/product-cache";
 import { getStorage } from "@/lib/offline/storage";
 import { lookupOfflineByBarcode, searchOfflineByName } from "@/lib/offline/local-database";
 import { httpJson } from "@/lib/network/request-manager";
+import { apiUrl } from "@/lib/network/api-url";
 import { isOnline, NETWORK_TIMEOUTS } from "@/lib/network/network-status";
 import { canCompressClientSide, compressImageForUpload } from "@/lib/image/compress";
 import { logger } from "@/lib/logger";
@@ -165,7 +166,7 @@ async function refreshBarcode(barcode: string, source: ProductSource): Promise<v
   const clean = normalizeBarcode(barcode);
   if (!clean) return;
   try {
-    const response = await httpJson(`/api/products/barcode/${encodeURIComponent(clean)}`, {
+    const response = await httpJson(apiUrl(`/api/products/barcode/${encodeURIComponent(clean)}`), {
       timeoutMs: NETWORK_TIMEOUTS.lookup,
       dedupeKey: barcodeDedupeKey(clean),
     });
@@ -222,7 +223,7 @@ export async function resolveProductByBarcode(
 
   // 3. Network (FoodGuard API), with timeout + transient retry + dedup.
   try {
-    const response = await httpJson(`/api/products/barcode/${encodeURIComponent(clean)}`, {
+    const response = await httpJson(apiUrl(`/api/products/barcode/${encodeURIComponent(clean)}`), {
       timeoutMs: NETWORK_TIMEOUTS.lookup,
       dedupeKey: barcodeDedupeKey(clean),
     });
@@ -285,7 +286,7 @@ export async function searchProductCandidates(query: string): Promise<ProductRes
   }
 
   try {
-    const response = await httpJson(`/api/products/search?q=${encodeURIComponent(q)}`, {
+    const response = await httpJson(apiUrl(`/api/products/search?q=${encodeURIComponent(q)}`), {
       timeoutMs: NETWORK_TIMEOUTS.lookup,
       dedupeKey: `search:${q}`,
     });
@@ -408,7 +409,7 @@ export async function resolveProductByPhoto(
       // ignore — visual search candidates are optional
     }
 
-    const response = await httpJson("/api/scan/label", {
+    const response = await httpJson(apiUrl("/api/scan/label"), {
       method: "POST",
       body: form,
       timeoutMs: NETWORK_TIMEOUTS.upload,

@@ -12,6 +12,7 @@ import { PasswordInput } from "@/components/auth/PasswordInput";
 import { AuthDivider } from "@/components/auth/AuthDivider";
 import { SocialLoginButton } from "@/components/auth/SocialLoginButton";
 import { GoogleIcon } from "@/components/auth/GoogleIcon";
+import { apiUrl } from "@/lib/network/api-url";
 
 type LoginFormProps = {
   labels: AuthLabels["login"];
@@ -81,7 +82,7 @@ export function LoginForm({
           router.push("/onboarding");
           return;
         }
-        const response = await fetch("/api/auth/login", {
+        const response = await fetch(apiUrl("/api/auth/login"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email.trim(), password }),

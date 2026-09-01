@@ -15,6 +15,7 @@ import { NutritionContext } from "./NutritionContext";
 import { NutritionDataQuality } from "./NutritionDataQuality";
 import { NutritionSource } from "./NutritionSource";
 import { NutritionActions } from "./NutritionActions";
+import { apiUrl } from "@/lib/network/api-url";
 
 type NutritionPageProps = {
   barcode: string;
@@ -56,7 +57,7 @@ export function NutritionPage({ barcode, lang = "en" }: NutritionPageProps) {
     let cancelled = false;
     async function fetchNutrition() {
       try {
-        const res = await fetch(`/api/nutrition/${encodeURIComponent(barcode)}`);
+        const res = await fetch(apiUrl(`/api/nutrition/${encodeURIComponent(barcode)}`));
         if (!res.ok) {
           if (!cancelled) setError("Unable to load nutrition information.");
           return;

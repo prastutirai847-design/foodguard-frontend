@@ -11,6 +11,7 @@ import type {
 import {
   initialConversationState,
 } from "./state";
+import { apiUrl } from "@/lib/network/api-url";
 
 export type UseAssistantArgs = {
   product: ProductSnapshot | null;
@@ -43,7 +44,7 @@ async function callAssistant(body: {
   language?: "en" | "hi";
   conversationId?: string | null;
 }): Promise<AssistantResponse> {
-  const response = await fetch("/api/food-safety-assistant", {
+  const response = await fetch(apiUrl("/api/food-safety-assistant"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),

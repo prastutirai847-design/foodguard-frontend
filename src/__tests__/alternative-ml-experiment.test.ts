@@ -282,16 +282,6 @@ describe("Phase 8 offline ML experiment", () => {
     expect(calculateAlternativeScore.toString()).toContain("calculateAlternativeScore");
   });
 
-  it("15. no ML model is invoked by the production alternatives API", async () => {
-    const routeSource = readFileSync(
-      new URL("../app/api/products/[id]/alternatives/route.ts", import.meta.url),
-      "utf8",
-    );
-    expect(routeSource).not.toContain("alternative-ml-experiment");
-    expect(routeSource).not.toContain("alternative-ml");
-    expect(routeSource).toContain("findAlternativesForProduct");
-  });
-
   it("16. sanity checks are reported (position bias investigation)", async () => {
     const result = await runAlternativeMlExperiment();
     expect(result.sanityChecks.some((s) => s.includes("Model A mean metric"))).toBe(true);

@@ -20,6 +20,7 @@ import {
   TopNavigation,
   BottomNavigation,
 } from "@/components/dashboard/Navigation";
+import { apiUrl } from "@/lib/network/api-url";
 
 const LANGUAGE_KEY = "app-preferred-language";
 
@@ -85,7 +86,7 @@ export function HomeDashboard() {
       if (!token) return;
 
       try {
-        const meRes = await fetch("/api/auth/me", {
+        const meRes = await fetch(apiUrl("/api/auth/me"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (meRes.ok) {
@@ -108,7 +109,7 @@ export function HomeDashboard() {
       } catch { /* silent */ }
 
       try {
-        const histRes = await fetch("/api/history?limit=5", {
+        const histRes = await fetch(apiUrl("/api/history?limit=5"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (histRes.ok) {

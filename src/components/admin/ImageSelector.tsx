@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
+
+import { apiUrl } from "@/lib/network/api-url";
 import {
   Upload,
   Check,
@@ -138,7 +140,7 @@ export function ImageSelector({ products }: ImageSelectorProps) {
         imageUrl = await fileToDataUrl(selected.file);
       }
 
-      const res = await fetch("/api/admin/product-image", {
+      const res = await fetch(apiUrl("/api/admin/product-image"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

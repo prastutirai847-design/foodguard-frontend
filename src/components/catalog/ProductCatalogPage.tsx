@@ -9,6 +9,7 @@ import { useNetworkQuality } from "@/lib/network/use-network";
 import { OfflineIndicator } from "@/components/offline/OfflineIndicator";
 import { ProductCard } from "./ProductCard";
 import { cn } from "@/lib/utils";
+import { apiUrl } from "@/lib/network/api-url";
 
 export type CatalogParams = {
   search?: string;
@@ -106,7 +107,7 @@ export function ProductCatalogPage({
       }
 
       try {
-        const response = await fetch(`/api/products?${params.toString()}`, {
+        const response = await fetch(apiUrl(`/api/products?${params.toString()}`), {
           signal: controller.signal,
         });
         const json = (await response.json()) as CatalogApiResponse;

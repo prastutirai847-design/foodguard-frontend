@@ -8,6 +8,7 @@ import { parseIngredientText } from "@/lib/ingredients/parse";
 import { logger } from "@/lib/logger";
 import { useAuth } from "@/components/AuthProvider";
 import { firebaseUploadScanImage } from "@/lib/firebase/storage";
+import { apiUrl } from "@/lib/network/api-url";
 
 type IngredientScannerProps = {
   cameraTitle: string;
@@ -89,7 +90,7 @@ export function IngredientScanner({
       form.append("image", blob, `label.${ext}`);
       form.append("detectBarcode", "true");
 
-      const response = await fetch("/api/scan/label", { method: "POST", body: form });
+      const response = await fetch(apiUrl("/api/scan/label"), { method: "POST", body: form });
       const payload = await response.json();
 
       if (!response.ok || !payload?.success) {

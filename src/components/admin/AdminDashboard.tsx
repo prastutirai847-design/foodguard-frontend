@@ -32,6 +32,7 @@ import { ErrorMonitoring } from "./ErrorMonitoring";
 import { AuditLog } from "./AuditLog";
 import { SystemSettings } from "./SystemSettings";
 import { AdminProfile } from "./AdminProfile";
+import { apiUrl } from "@/lib/network/api-url";
 
 type AdminData = {
   admin: AdminUser;
@@ -66,7 +67,7 @@ export function AdminDashboard({ lang = "en" }: AdminDashboardProps) {
     let cancelled = false;
     async function fetchData() {
       try {
-        const res = await fetch("/api/admin/data");
+        const res = await fetch(apiUrl("/api/admin/data"));
         if (!res.ok) {
           const body = await res.json().catch(() => null);
           throw new Error(body?.error?.message ?? `Request failed (${res.status})`);

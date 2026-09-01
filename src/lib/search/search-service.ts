@@ -2,6 +2,7 @@
 
 import type { CatalogProductItem } from "@/lib/store/sqlite";
 import { catalogCache } from "@/lib/cache/catalog-cache";
+import { apiUrl } from "@/lib/network/api-url";
 
 /**
  * Client-side product search over the real FoodGuard data.
@@ -175,7 +176,7 @@ async function fetchRemote(
   if (query) params.set("search", query);
 
   try {
-    const response = await fetch(`/api/products?${params.toString()}`, { signal });
+    const response = await fetch(apiUrl(`/api/products?${params.toString()}`), { signal });
     const json = (await response.json()) as CatalogApiResponse;
     if (!response.ok || !json.success || !json.data) {
       throw new Error(json.error?.message ?? "Product search failed");

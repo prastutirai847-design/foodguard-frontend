@@ -27,6 +27,7 @@ import { AnalysisLoading } from "./AnalysisLoading";
 import { AnalysisError } from "./AnalysisError";
 import { analysisCache, analysisCacheKey } from "@/lib/cache/analysis-cache";
 import { OfflineIndicator } from "@/components/offline/OfflineIndicator";
+import { apiUrl } from "@/lib/network/api-url";
 
 type AnalysisPhase = "loading" | "result" | "error";
 
@@ -104,7 +105,7 @@ export function ProductAnalysisPage({
       }
 
       try {
-        const response = await fetch("/api/analyze", {
+        const response = await fetch(apiUrl("/api/analyze"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           signal: controller.signal,

@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { EnhancedAlternative } from "@/services/recommendation.service";
 import type { AlternativeCharacteristicInfo } from "@/lib/alternative-characteristics";
+import { apiUrl } from "@/lib/network/api-url";
 
 type AlternativesSectionProps = {
   title: string;
@@ -66,7 +67,7 @@ function sendAlternativeFeedback(
   eventType: "VIEWED" | "CLICKED",
 ) {
   if (!productId || !alternativeProductId) return;
-  void fetch(`/api/products/${encodeURIComponent(productId)}/alternatives/feedback`, {
+  void fetch(apiUrl(`/api/products/${encodeURIComponent(productId)}/alternatives/feedback`), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ alternativeProductId, eventType }),
