@@ -237,12 +237,12 @@ export function ProductAnalysisPage({
         </div>
       </header>
 
-      <main className="mx-auto w-full flex-1 px-4 py-6">
-        <div className="mx-auto max-w-5xl">
+      <main className="mx-auto w-full flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
           <div className="mb-4 flex justify-end">
             <OfflineIndicator />
           </div>
-          <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
             {/* Left column — primary analysis */}
             <div className="flex flex-col gap-6">
               <ProductHeader
@@ -260,6 +260,7 @@ export function ProductAnalysisPage({
                 label={product.foodguardScore?.rating ?? assessmentData.label}
                 description={assessmentData.description}
                 score={product.score}
+                showScore={!product.foodguardScore}
               />
               {product.foodguardScore && (
                 <FoodGuardScoreCard

@@ -131,7 +131,7 @@ export const AUTH_LABELS: Record<string, AuthLabels> = {
     },
     guest: {
       heading: "No account yet?",
-      note: "Skip the form and explore FoodGaurd instantly as a guest — no email or password needed.",
+      note: "Skip the form and explore FoodGuard instantly as a guest — no email or password needed.",
       button: "Continue as Guest",
       loading: "Signing in as guest...",
       error: "Could not start a guest session. Please try again.",
@@ -202,7 +202,7 @@ export const AUTH_LABELS: Record<string, AuthLabels> = {
     },
     guest: {
       heading: "अभी खाता नहीं है?",
-      note: "फ़ॉर्म छोड़ें और बिना ईमेल या पासवर्ड के गेस्ट के रूप में FoodGaurd एक्सप्लोर करें।",
+      note: "फ़ॉर्म छोड़ें और बिना ईमेल या पासवर्ड के गेस्ट के रूप में FoodGuard एक्सप्लोर करें।",
       button: "गेस्ट के रूप में जारी रखें",
       loading: "गेस्ट के रूप में साइन इन हो रहा है...",
       error: "गेस्ट सत्र शुरू नहीं हो सका। कृपया पुनः प्रयास करें।",

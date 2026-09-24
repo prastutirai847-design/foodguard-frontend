@@ -11,6 +11,7 @@ type AssessmentCardProps = {
   label: string;
   description: string;
   score: number;
+  showScore?: boolean;
 };
 
 const CONFIG: Record<
@@ -21,35 +22,40 @@ const CONFIG: Record<
     iconColor: string;
     borderColor: string;
     labelColor: string;
+    badgeBg: string;
   }
 > = {
   low: {
     icon: CheckCircle2,
-    bg: "bg-green-50 dark:bg-green-950/40",
-    iconColor: "text-green-600 dark:text-green-400",
-    borderColor: "border-green-200 dark:border-green-900/50",
-    labelColor: "text-green-700 dark:text-green-400",
+    bg: "bg-emerald-50/50 dark:bg-emerald-950/25",
+    iconColor: "text-emerald-600 dark:text-emerald-400",
+    borderColor: "border-emerald-200/70 dark:border-emerald-900/50",
+    labelColor: "text-emerald-800 dark:text-emerald-300",
+    badgeBg: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20",
   },
   moderate: {
     icon: AlertCircle,
-    bg: "bg-amber-50 dark:bg-amber-950/40",
+    bg: "bg-amber-50/50 dark:bg-amber-950/25",
     iconColor: "text-amber-600 dark:text-amber-400",
-    borderColor: "border-amber-200 dark:border-amber-900/50",
-    labelColor: "text-amber-700 dark:text-amber-400",
+    borderColor: "border-amber-200/70 dark:border-amber-900/50",
+    labelColor: "text-amber-800 dark:text-amber-300",
+    badgeBg: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20",
   },
   high: {
     icon: AlertTriangle,
-    bg: "bg-red-50 dark:bg-red-950/40",
-    iconColor: "text-red-600 dark:text-red-400",
-    borderColor: "border-red-200 dark:border-red-900/50",
-    labelColor: "text-red-700 dark:text-red-400",
+    bg: "bg-rose-50/50 dark:bg-rose-950/25",
+    iconColor: "text-rose-600 dark:text-rose-400",
+    borderColor: "border-rose-200/70 dark:border-rose-900/50",
+    labelColor: "text-rose-800 dark:text-rose-300",
+    badgeBg: "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20",
   },
   insufficient: {
     icon: HelpCircle,
-    bg: "bg-gray-50 dark:bg-gray-900/40",
-    iconColor: "text-gray-500 dark:text-gray-400",
-    borderColor: "border-gray-200 dark:border-gray-800",
-    labelColor: "text-gray-600 dark:text-gray-400",
+    bg: "bg-muted/40 dark:bg-muted/20",
+    iconColor: "text-muted-foreground",
+    borderColor: "border-border/80",
+    labelColor: "text-foreground",
+    badgeBg: "bg-muted text-muted-foreground border-border",
   },
 };
 
@@ -58,35 +64,51 @@ export function AssessmentCard({
   label,
   description,
   score,
+  showScore = true,
 }: AssessmentCardProps) {
-  const config = CONFIG[level];
+  const config = CONFIG[level] ?? CONFIG.insufficient;
   const Icon = config.icon;
 
-  // Score is now 0.0–5.0 (FoodGuard four-component score)
   const scoreColor =
     score >= 4.0
-      ? "text-green-600 dark:text-green-400"
+      ? "text-emerald-600 dark:text-emerald-400"
       : score >= 2.0
         ? "text-amber-600 dark:text-amber-400"
-        : "text-red-600 dark:text-red-400";
+        : "text-rose-600 dark:text-rose-400";
 
   return (
     <div
-      className={`flex flex-col items-center gap-4 rounded-2xl border ${config.borderColor} ${config.bg} p-6 text-center`}
+      className={`flex items-start gap-4 rounded-2xl border ${config.borderColor} ${config.bg} p-4.5 shadow-2xs transition-all sm:p-5`}
     >
-      <div className="flex size-14 items-center justify-center rounded-full bg-white/80 dark:bg-white/10">
-        <Icon className={`size-7 ${config.iconColor}`} aria-hidden="true" />
+      <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-card shadow-xs ring-1 ring-border/50">
+        <Icon className={`size-5.5 ${config.iconColor}`} aria-hidden="true" />
       </div>
-      <div>
-        <h2 className={`text-lg font-bold ${config.labelColor}`}>{label}</h2>
-        <p className="mt-2 text-sm text-muted-foreground max-w-sm leading-relaxed">
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Safety Assessment
+          </span>
+          <span className={`inline-flex items-center rounded-full border px-2 py-0.2 text-[10px] font-semibold ${config.badgeBg}`}>
+            {level.toUpperCase()}
+          </span>
+        </div>
+        <h2 className={`mt-0.5 text-base font-bold tracking-tight ${config.labelColor}`}>
+          {label}
+        </h2>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
           {description}
         </p>
       </div>
-      <div className="flex items-baseline gap-1">
-        <span className={`text-3xl font-bold ${scoreColor}`}>{score.toFixed(1)}</span>
-        <span className="text-sm text-muted-foreground">/ 5</span>
-      </div>
+
+      {showScore && (
+        <div className="flex shrink-0 flex-col items-end pl-2">
+          <span className={`text-2xl font-bold tracking-tight ${scoreColor}`}>
+            {score.toFixed(1)}
+          </span>
+          <span className="text-[10px] text-muted-foreground">/ 5.0</span>
+        </div>
+      )}
     </div>
   );
 }

@@ -24,16 +24,24 @@ const ASSESSMENT_STYLES: Record<
   AssessmentLevel,
   { badge: string; dot: string; label: string }
 > = {
-  low: { badge: "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-400", dot: "bg-green-500", label: "Low" },
-  moderate: {
-    badge: "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400",
-    dot: "bg-amber-500",
-    label: "Attention",
+  low: {
+    badge: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20",
+    dot: "bg-emerald-500",
+    label: "Low Concern",
   },
-  high: { badge: "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400", dot: "bg-red-500", label: "High Attention" },
+  moderate: {
+    badge: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20",
+    dot: "bg-amber-500",
+    label: "Moderate",
+  },
+  high: {
+    badge: "bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20",
+    dot: "bg-rose-500",
+    label: "High Attention",
+  },
   insufficient: {
-    badge: "bg-gray-50 text-gray-600 dark:bg-gray-900/40 dark:text-gray-400",
-    dot: "bg-gray-400",
+    badge: "bg-muted text-muted-foreground border border-border",
+    dot: "bg-muted-foreground",
     label: "Insufficient Data",
   },
 };
@@ -48,29 +56,28 @@ function IngredientCard({
   productBarcode?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const style = ASSESSMENT_STYLES[ingredient.assessment];
+  const style = ASSESSMENT_STYLES[ingredient.assessment] ?? ASSESSMENT_STYLES.insufficient;
 
   return (
-    <div className="rounded-xl border border-border bg-card overflow-hidden">
+    <div className="overflow-hidden rounded-xl border border-border/70 bg-card transition-all">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left hover:bg-muted/50 transition-colors"
+        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40"
       >
-        <div className="flex items-center gap-2 min-w-0">
-          <span className={cn("size-2 rounded-full shrink-0", style.dot)} />
-          <span className="text-sm font-medium text-foreground truncate">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <span className={cn("size-2 shrink-0 rounded-full", style.dot)} />
+          <span className="truncate text-sm font-medium text-foreground">
             {ingredient.name}
           </span>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex shrink-0 items-center gap-2">
           <span
             className={cn(
-              "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium",
+              "inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold",
               style.badge,
             )}
           >
-            <span className={cn("size-1.5 rounded-full", style.dot)} />
             {style.label}
           </span>
           <ChevronDown

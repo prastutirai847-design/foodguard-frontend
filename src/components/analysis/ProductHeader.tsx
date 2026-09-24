@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, Clock, Barcode as BarcodeIcon, Tag, Building2 } from "lucide-react";
 import Link from "next/link";
 import type { ProductCategory } from "@/data/mock-data";
 import { CATEGORY_LABELS } from "@/data/mock-data";
@@ -34,41 +34,68 @@ export function ProductHeader({
     .slice(0, 2)
     .map((word) => word[0]?.toUpperCase())
     .join("");
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3.5">
       <Link
         href="/scan"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors w-fit"
+        className="group inline-flex w-fit items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
-        <ArrowLeft className="size-4" aria-hidden="true" />
+        <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
         {backButton}
       </Link>
-      <div className="flex gap-4">
-        <div className="size-20 shrink-0 rounded-2xl bg-muted flex items-center justify-center overflow-hidden">
+
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        {/* Product image container with clean outline */}
+        <div className="flex size-22 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border/80 bg-card p-1.5 shadow-xs">
           {imageUrl && !imageFailed ? (
             <img
               src={imageUrl}
               alt={name}
-              className="size-full object-cover"
+              className="size-full rounded-xl object-contain"
               onError={() => setImageFailed(true)}
             />
           ) : (
-            <span className="text-lg font-semibold text-muted-foreground">
-              {initials || "?"}
-            </span>
+            <div className="flex size-full items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <span className="text-xl font-bold tracking-tight">
+                {initials || "?"}
+              </span>
+            </div>
           )}
         </div>
-        <div className="flex flex-col gap-1">
-          <h1 className="text-xl font-bold text-foreground">{name}</h1>
-          <p className="text-sm text-muted-foreground">
-            {brand} · {CATEGORY_LABELS[category]}
-          </p>
-          {barcode && (
-            <p className="text-xs text-muted-foreground font-mono">{barcode}</p>
-          )}
-          <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-            <Clock className="size-3" aria-hidden="true" />
-            {scanDateLabel}: {scanDate}
+
+        {/* Product metadata */}
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2 mb-1.5">
+            {brand && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-card px-2.5 py-0.5 text-[11px] font-medium text-foreground shadow-2xs">
+                <Building2 className="size-3 text-muted-foreground" aria-hidden="true" />
+                {brand}
+              </span>
+            )}
+            {category && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-card px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground shadow-2xs">
+                <Tag className="size-3 text-muted-foreground" aria-hidden="true" />
+                {CATEGORY_LABELS[category] ?? category}
+              </span>
+            )}
+          </div>
+
+          <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+            {name}
+          </h1>
+
+          <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+            {barcode && (
+              <span className="inline-flex items-center gap-1 rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
+                <BarcodeIcon className="size-3.5" aria-hidden="true" />
+                {barcode}
+              </span>
+            )}
+            <div className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+              <Clock className="size-3" aria-hidden="true" />
+              <span>{scanDateLabel}: {scanDate}</span>
+            </div>
           </div>
         </div>
       </div>

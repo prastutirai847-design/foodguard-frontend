@@ -411,23 +411,23 @@ export function ScannerViewport({
         </div>
       )}
 
-      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-        <div className="flex items-center justify-center gap-2">
+      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 pb-5">
+        <div className="mx-auto flex w-fit items-center justify-center gap-2 rounded-full border border-white/15 bg-black/60 px-4 py-1.5 backdrop-blur-md shadow-sm">
           {isScanning && <div className="size-2 rounded-full bg-primary animate-pulse" />}
-          <p className="text-sm text-white/90 font-medium">
+          <p className="text-xs text-white/95 font-medium tracking-wide">
             {isScanning ? scanningText : alignText}
           </p>
         </div>
       </div>
 
       {showCamera && visibleCameraState === "active" && onCapture && (
-        <div className="absolute bottom-14 inset-x-0 flex justify-center">
+        <div className="absolute bottom-16 inset-x-0 flex justify-center">
           <button
             type="button"
             onClick={handleCapture}
-            className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-xl backdrop-blur-sm transition-all hover:bg-primary/90 active:scale-95"
           >
-            <Camera className="mr-1.5 inline size-4" aria-hidden="true" />
+            <Camera className="size-4" aria-hidden="true" />
             {captureLabel}
           </button>
         </div>

@@ -53,18 +53,18 @@ export function TopNavigation({
 
   return (
     <nav
-      className="hidden border-b border-border bg-card/80 backdrop-blur-md lg:block"
+      className="sticky top-0 z-50 hidden border-b border-border/70 bg-card/85 backdrop-blur-md transition-all lg:block"
       aria-label="Main navigation"
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-15 max-w-6xl items-center justify-between px-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Home">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 ring-1 ring-primary/15">
+        <Link href="/" className="group flex items-center gap-2.5 transition-opacity hover:opacity-90" aria-label="FoodGuard Home">
+          <div className="flex size-8.5 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20 transition-transform group-hover:scale-105">
             <svg
               viewBox="0 0 48 48"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="size-5 text-primary"
+              className="size-5"
               aria-hidden="true"
             >
               <path
@@ -89,13 +89,13 @@ export function TopNavigation({
               />
             </svg>
           </div>
-          <span className="text-sm font-semibold text-foreground">
+          <span className="text-sm font-semibold tracking-tight text-foreground">
             FoodGuard
           </span>
         </Link>
 
         {/* Nav links */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           {items.map(({ key, label, href, Icon }) => {
             const isActive = key === activeKey;
             return (
@@ -103,15 +103,15 @@ export function TopNavigation({
                 key={key}
                 href={href}
                 className={cn(
-                  "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition-all duration-150",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   isActive
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    ? "bg-primary/10 text-primary shadow-xs font-semibold"
+                    : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
                 )}
                 aria-current={isActive ? "page" : undefined}
               >
-                <Icon className="size-4" aria-hidden="true" />
+                <Icon className={cn("size-4 transition-transform", isActive && "scale-105")} aria-hidden="true" />
                 {label}
               </Link>
             );
@@ -119,7 +119,7 @@ export function TopNavigation({
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           {/* Theme toggle */}
           <ThemeToggle />
 
@@ -132,14 +132,14 @@ export function TopNavigation({
                 setLangOpen((p) => !p);
                 setProfileOpen(false);
               }}
-              className="flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="flex items-center gap-1.5 rounded-xl border border-border/60 bg-card/60 px-3 py-1.5 text-sm text-muted-foreground transition-all hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <Globe className="size-4" aria-hidden="true" />
               <span className="text-xs font-medium">{currentLang.nativeLabel}</span>
-              <ChevronDown className="size-3" aria-hidden="true" />
+              <ChevronDown className="size-3 opacity-60" aria-hidden="true" />
             </button>
             {langOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 w-40 overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+              <div className="absolute right-0 top-full z-50 mt-1.5 w-40 overflow-hidden rounded-2xl border border-border/80 bg-card/95 p-1 shadow-lg backdrop-blur-md">
                 {APP_LANGUAGES.map((lang) => (
                   <button
                     key={lang.id}
@@ -149,10 +149,10 @@ export function TopNavigation({
                       setLangOpen(false);
                     }}
                     className={cn(
-                      "flex w-full items-center gap-2.5 px-3.5 py-2.5 text-sm transition-colors",
+                      "flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium transition-colors",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                       currentLanguage === lang.id
-                        ? "bg-primary/10 text-primary font-medium"
+                        ? "bg-primary/10 text-primary font-semibold"
                         : "text-foreground hover:bg-muted",
                     )}
                   >
@@ -172,19 +172,19 @@ export function TopNavigation({
                 setProfileOpen((p) => !p);
                 setLangOpen(false);
               }}
-              className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="flex size-9 items-center justify-center rounded-xl bg-primary/10 text-sm font-semibold text-primary ring-1 ring-primary/20 transition-all hover:bg-primary/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               aria-label="Profile menu"
             >
               <User className="size-4" aria-hidden="true" />
             </button>
             {profileOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 w-44 overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+              <div className="absolute right-0 top-full z-50 mt-1.5 w-44 overflow-hidden rounded-2xl border border-border/80 bg-card/95 p-1 shadow-lg backdrop-blur-md">
                 <Link
                   href="/profile"
-                  className="flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   onClick={() => setProfileOpen(false)}
                 >
-                  <Settings className="size-4 text-muted-foreground" aria-hidden="true" />
+                  <Settings className="size-3.5 text-muted-foreground" aria-hidden="true" />
                   Settings
                 </Link>
                 <button
@@ -193,9 +193,9 @@ export function TopNavigation({
                     logout();
                     router.push("/login");
                   }}
-                  className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-sm text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium text-destructive transition-colors hover:bg-destructive/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
-                  <LogOut className="size-4 text-muted-foreground" aria-hidden="true" />
+                  <LogOut className="size-3.5 text-destructive" aria-hidden="true" />
                   Log Out
                 </button>
               </div>
@@ -216,10 +216,10 @@ export function BottomNavigation({
 }) {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-card/95 backdrop-blur-sm lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-border/80 bg-card/90 pb-safe backdrop-blur-lg lg:hidden"
       aria-label="Main navigation"
     >
-      <div className="mx-auto flex max-w-md items-center justify-around px-2 py-1.5">
+      <div className="mx-auto flex max-w-md items-center justify-around px-2 py-2">
         {items.map(({ key, label, href, Icon }) => {
           const isActive = key === activeKey;
           return (
@@ -227,16 +227,21 @@ export function BottomNavigation({
               key={key}
               href={href}
               className={cn(
-                "flex flex-col items-center gap-0.5 rounded-lg px-3 py-1.5 transition-colors",
+                "flex flex-col items-center gap-1 rounded-xl px-3 py-1 transition-all duration-150",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 isActive
-                  ? "text-primary"
+                  ? "text-primary font-semibold"
                   : "text-muted-foreground hover:text-foreground",
               )}
               aria-current={isActive ? "page" : undefined}
             >
-              <Icon className="size-5" aria-hidden="true" />
-              <span className="text-[10px] font-medium">{label}</span>
+              <div className={cn(
+                "flex size-8 items-center justify-center rounded-lg transition-colors",
+                isActive ? "bg-primary/10 text-primary" : "text-muted-foreground"
+              )}>
+                <Icon className="size-4.5" aria-hidden="true" />
+              </div>
+              <span className="text-[10px] tracking-tight">{label}</span>
             </Link>
           );
         })}

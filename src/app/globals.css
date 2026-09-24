@@ -1,37 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f7f5;
-  --foreground: #1c1c1a;
+  --background: #fafaf9;
+  --foreground: #18181b;
   --card: #ffffff;
-  --card-foreground: #1c1c1a;
-  --muted: #efefec;
-  --muted-foreground: #5c5c58;
-  --border: #e3e3df;
-  --primary: #166534;
+  --card-foreground: #18181b;
+  --muted: #f4f4f5;
+  --muted-foreground: #64748b;
+  --border: #e4e4e7;
+  --primary: #15803d;
   --primary-foreground: #ffffff;
-  --ring: #166534;
-  --destructive: #dc2626;
+  --ring: #15803d;
+  --destructive: #e11d48;
   --destructive-foreground: #ffffff;
   --accent: #f0fdf4;
-  --accent-foreground: #166534;
+  --accent-foreground: #15803d;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #e4e4e3;
-  --card: #141414;
-  --card-foreground: #e4e4e3;
-  --muted: #1e1e1e;
-  --muted-foreground: #8a8a88;
-  --border: #2a2a2a;
-  --primary: #34d399;
-  --primary-foreground: #0a0a0a;
-  --ring: #34d399;
-  --destructive: #ef4444;
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --card: #121215;
+  --card-foreground: #f4f4f5;
+  --muted: #18181b;
+  --muted-foreground: #94a3b8;
+  --border: #27272a;
+  --primary: #22c55e;
+  --primary-foreground: #09090b;
+  --ring: #22c55e;
+  --destructive: #f43f5e;
   --destructive-foreground: #ffffff;
   --accent: #052e16;
-  --accent-foreground: #34d399;
+  --accent-foreground: #4ade80;
 }
 
 @theme inline {
@@ -57,20 +57,26 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @keyframes scan-line {
   0% {
-    top: 0%;
+    top: 5%;
+    opacity: 0.8;
   }
   50% {
-    top: 100%;
+    top: 95%;
+    opacity: 1;
   }
   100% {
-    top: 0%;
+    top: 5%;
+    opacity: 0.8;
   }
 }
 
 .animate-scan-line {
-  animation: scan-line 2s ease-in-out infinite;
+  animation: scan-line 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
