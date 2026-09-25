@@ -1,37 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
-  --foreground: #18181b;
+  --background: #fafaf7;
+  --foreground: #1c1c1e;
   --card: #ffffff;
-  --card-foreground: #18181b;
-  --muted: #f4f4f5;
-  --muted-foreground: #64748b;
-  --border: #e4e4e7;
-  --primary: #15803d;
+  --card-foreground: #1c1c1e;
+  --muted: #f1f1ed;
+  --muted-foreground: #6b6b70;
+  --border: #ecece8;
+  --primary: #587b5f;
   --primary-foreground: #ffffff;
-  --ring: #15803d;
-  --destructive: #e11d48;
+  --ring: #587b5f;
+  --destructive: #b9534d;
   --destructive-foreground: #ffffff;
-  --accent: #f0fdf4;
-  --accent-foreground: #15803d;
+  --accent: #edf3ec;
+  --accent-foreground: #3f6347;
+  --surface-strong: #f4f4ef;
+  --shadow-soft: 0 12px 30px rgba(28, 28, 30, 0.06);
 }
 
 .dark {
-  --background: #09090b;
-  --foreground: #f4f4f5;
-  --card: #121215;
-  --card-foreground: #f4f4f5;
-  --muted: #18181b;
-  --muted-foreground: #94a3b8;
-  --border: #27272a;
-  --primary: #22c55e;
-  --primary-foreground: #09090b;
-  --ring: #22c55e;
-  --destructive: #f43f5e;
-  --destructive-foreground: #ffffff;
-  --accent: #052e16;
-  --accent-foreground: #4ade80;
+  --background: #171816;
+  --foreground: #f5f5f1;
+  --card: #20221f;
+  --card-foreground: #f5f5f1;
+  --muted: #292c28;
+  --muted-foreground: #b2b3ac;
+  --border: #363a35;
+  --primary: #9bbb9a;
+  --primary-foreground: #172018;
+  --ring: #9bbb9a;
+  --destructive: #e58a80;
+  --destructive-foreground: #241312;
+  --accent: #263328;
+  --accent-foreground: #b8d6b6;
+  --surface-strong: #252824;
+  --shadow-soft: 0 14px 32px rgba(0, 0, 0, 0.24);
 }
 
 @theme inline {
@@ -53,30 +57,132 @@
   --font-mono: var(--font-geist-mono);
 }
 
+* {
+  border-color: var(--border);
+}
+
+html {
+  background: var(--background);
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-geist-sans), Inter, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* FoodGuard visual system: calm surfaces, consistent rhythm, and one clear accent. */
+h1 {
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+p {
+  color: #4a4a4e;
+  max-width: 65ch;
+}
+
+.dark p {
+  color: #c3c4bd;
+}
+
+/* Neutralize the old high-contrast card treatment without changing layout or behavior. */
+[class*="rounded-2xl"][class*="border"],
+[class*="rounded-3xl"][class*="border"] {
+  box-shadow: var(--shadow-soft);
+}
+
+/* Product imagery always sits on a quiet, neutral wash. */
+img {
+  background: var(--surface-strong);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:not([aria-label="Profile menu"]),
+[role="button"] {
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+/* Make primary actions calm, readable, and consistent at the requested 52px height. */
+button.bg-primary,
+a.bg-primary,
+button[class*="bg-primary"],
+a[class*="bg-primary"] {
+  min-height: 52px;
+  border-radius: 12px;
+  letter-spacing: -0.01em;
+}
+
+/* Shared alignment grid on the app shell. */
+main {
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+}
+
+/* Softer navigation and dividers. */
+nav.sticky,
+nav.fixed {
+  border-color: #ecece8;
+  box-shadow: 0 4px 18px rgba(28, 28, 30, 0.035);
+}
+
+.dark nav.sticky,
+.dark nav.fixed {
+  border-color: #363a35;
+}
+
+/* Consistent metadata/tag language: small, quiet, and easy to scan. */
+[class*="text-[10px]"],
+[class*="text-[11px]"],
+[class*="text-xs"] {
+  letter-spacing: 0.035em;
+}
+
+/* Hero cards use whitespace and hierarchy instead of loud gradients. */
+[class*="from-primary/6"],
+[class*="from-primary/8"],
+[class*="from-card"] {
+  background-image: none !important;
+  background-color: var(--card);
+}
+
+/* Mobile bottom navigation remains functional but reads as a quiet floating dock. */
+nav.fixed.inset-x-0.bottom-0 {
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+@media (min-width: 768px) {
+  main {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
 @keyframes scan-line {
-  0% {
-    top: 5%;
-    opacity: 0.8;
-  }
-  50% {
-    top: 95%;
-    opacity: 1;
-  }
-  100% {
-    top: 5%;
-    opacity: 0.8;
-  }
+  0% { top: 5%; opacity: 0.8; }
+  50% { top: 95%; opacity: 1; }
+  100% { top: 5%; opacity: 0.8; }
 }
 
 .animate-scan-line {
   animation: scan-line 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
-
